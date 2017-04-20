@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RuNetSoft</title>
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+</head>
+<body>
+    <div id="education_city">
+        <form name="filter-form">
+            <div class="row">
+                <h4>Образование:</h4>
+                <select id="filter-edu" name="name" size="11" multiple>
+
+                </select>
+            </div><br>
+            <div class="row">
+                <h4>Города:</h4>
+                <select id="filter-city" name="name" size="11" multiple>
+                </select>
+            </div>
+        </form>
+    </div>
+
+    <div>
+        <h4>Пользователи:</h4>
+        <table size="11" class="table">
+            <thead>
+                <tr>
+                    <th>ФИО</th>
+                    <th>Образование</th>
+                    <th>Города</th>
+                </tr>
+            </thead>
+            <tbody id="table_body">
+
+            </tbody>
+        </table>
+    </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="assets/js/script.js"></script>
+
+</body>
+</html>
