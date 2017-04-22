@@ -7,5 +7,19 @@ select {
     width:15%;
 }
 
+.grid-h, .grid {
+    width: 550px;
+    display: grid;
+    grid-template-columns: repeat(3, 2fr);
+}
 
+.grid-head {
+    border: 1px solid black; /* Параметры границы */
+    background: grey; /* Цвет фона */
+    padding: 10px;
+}
 
+.grid-cont {
+    border: 1px solid black; /* Параметры границы */
+    padding: 10px;
+}

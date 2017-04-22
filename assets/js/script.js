@@ -6,7 +6,6 @@ $(document).ready(function () {
     timer = 2000;
     var timeout;
 
-    // sdsda
     $('#filter-edu').change(function () {
         clearTimeout(timeout);
         edication = $(this).val();
@@ -33,7 +32,8 @@ function send() {
             city: city
         },
         success: function (resp) {
-            fill_table(resp.users_cities);
+            //fill_table(resp.users_cities);
+            fill_grid(resp.users_cities);
         }
     });
 }
@@ -58,8 +58,9 @@ function init() {
             $('#filter-edu').html(educations);
             $('#filter-city').html(cities);
 
-            fill_table(resp.users_cities);
+            //fill_table(resp.users_cities);
 
+            fill_grid(resp.users_cities);
         }
     });
 }
@@ -68,7 +69,7 @@ function init() {
  * Функция построения таблицы ответа
  * @param rows
  */
-function fill_table(rows) {
+/*function fill_table(rows) {
     var users_cities = [];
 
     $(rows).each(function(){
@@ -76,4 +77,14 @@ function fill_table(rows) {
     });
 
     $('#table_body').html(users_cities);
+}*/
+
+function fill_grid(rows) {
+    var users_cities = [];
+
+    $(rows).each(function(){
+        users_cities.push('<div class="grid-cont">'+ this.name_user +'</div><div class="grid-cont">'+ this.name_edu +'</div><div class="grid-cont">'+ this.name_city +'</div>');
+    });
+
+    $('.grid').html(users_cities);
 }

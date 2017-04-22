@@ -25,7 +25,8 @@ function debug($var)
  * @param array $item
  * @return int
  */
-function get_ids($item){
+function get_ids($item)
+{
     return $item['id'];
 }
 
@@ -40,22 +41,30 @@ $cities = isset($_POST['city']) && $_POST['city'] ? $_POST['city'] : array_map("
 $education_placeholders = implode(',', array_fill(0, count($educations), '?'));
 $cities_placeholders = implode(',', array_fill(0, count($cities), '?'));
 
-$res_all = $pdo->prepare('SELECT u.name AS name_user, e.name AS name_edu, GROUP_CONCAT(c.name SEPARATOR \', \') AS name_city
-                               FROM education e INNER JOIN user u
-                               ON e.id = u.education_id                                  
-                               INNER JOIN users_cities                        
-                               ON u.id = users_cities.user_id
-                               INNER JOIN city c
-                               ON users_cities.city_id = c.id
-                               WHERE (c.id IN ('. $cities_placeholders .')) AND (e.id IN ('. $education_placeholders .'))
-                               GROUP BY u.id;');
-
+$res_all = $pdo->prepare('
+    SELECT u.name AS name_user,
+           e.name AS name_edu,
+           GROUP_CONCAT(c.name SEPARATOR \', \') AS name_city
+    FROM education e INNER JOIN user u
+    ON e.id = u.education_id                                  
+    INNER JOIN users_cities                        
+    ON u.id = users_cities.user_id
+    INNER JOIN city c
+    ON users_cities.city_id = c.id
+    WHERE (u.id IN (
+      SELECT DISTINCT u.id
+      FROM user u
+      LEFT JOIN users_cities uc ON u.id = uc.user_id
+      WHERE uc.city_id IN ('. $cities_placeholders .'))
+    )
+    AND (e.id IN ('. $education_placeholders .'))
+    GROUP BY u.id;');
 
 $res_all->execute(array_merge($cities, $educations));
 
 $users_cities = $res_all->fetchAll();
 
-if(!$_POST){
+if (!$_POST) {
     $response['educations'] = $db_educations;
     $response['cities'] = $db_cities;
 }
